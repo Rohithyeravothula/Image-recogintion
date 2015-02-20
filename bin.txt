@@ -1,0 +1,31 @@
+trndata = ClassificationDataSet(211,class_labels=['0','1','2','3','4'])
+l=len(w)
+for i in range(0,l-1):
+	try:
+		trndata.append(w[i],[0])
+	except:
+		continue
+
+
+tstdata = ClassificationDataSet(80,class_labels=['0','1','2','3','4'])
+l=len(w_t)
+for i in range(0,l-1):
+	try:
+		tstdata.append([w_t[i],w_t[i+1]],[0])
+	except:
+		continue
+
+
+#trndata=w.tolist()
+#tstdata=w_t.tolist()
+#trndata._convertToOneOfMany(bounds=[0, 1])
+#trndata._convertToOneOfMany( )
+#tstdata._convertToOneOfMany( )
+fnn = buildNetwork( 211, 100, 5,)
+trainer = BackpropTrainer( fnn,w.tolist(),0.1,True,0.01)
+for i in range(0,5):
+	trainer.trainEpochs(1)
+out=fnn.activateOnDataset(tstdata)
+out_error=calculateerror(output,Y)
+print "neural network",str(out_error)
+
